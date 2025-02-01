@@ -10,7 +10,7 @@
 Summary: Library that implements an embeddable SQL database engine
 Name: sqlite
 Version: %{rpmver}
-Release: 8%{?dist}.3
+Release: 8%{?dist}.4
 License: Public Domain
 Group: Applications/Databases
 URL: http://www.sqlite.org/
@@ -42,6 +42,7 @@ Patch10: sqlite-3.7.14-printf-overflow.patch
 # Fixes for CVE-2019-13734
 Patch11: sqlite-3.26.0-CVE-2019-13734.patch
 Patch12: CVE-2019-5827.patch
+Patch13: CVE-2020-35527.patch
 
 BuildRequires: ncurses-devel readline-devel glibc-devel
 BuildRequires: autoconf
@@ -69,8 +70,8 @@ Requires: %{name} = %{version}-%{release}
 Requires: pkgconfig
 
 %description devel
-This package contains the header files and development documentation 
-for %{name}. If you like to develop programs using %{name}, you will need 
+This package contains the header files and development documentation
+for %{name}. If you like to develop programs using %{name}, you will need
 to install %{name}-devel.
 
 %package doc
@@ -80,7 +81,7 @@ BuildArch: noarch
 
 %description doc
 This package contains most of the static HTML files that comprise the
-www.sqlite.org website, including all of the SQL Syntax and the 
+www.sqlite.org website, including all of the SQL Syntax and the
 C/C++ interface specs and other miscellaneous documentation.
 
 %package -n lemon
@@ -123,6 +124,7 @@ This package contains the tcl modules for %{name}.
 %patch10 -p1 -b .printf-overflow
 %patch11 -p1
 %patch12 -p1
+%patch13 -p1
 
 # Remove cgi-script erroneously included in sqlite-doc-3070500
 rm -f %{name}-doc-%{realver}/search
@@ -213,6 +215,9 @@ rm -rf $RPM_BUILD_ROOT
 %endif
 
 %changelog
+* Thu Dec 19 2024 Pratham Patel <ppatel@ciq.com> - 3.7.17-8.4
+- Fix CVE-2020-35527
+
 * Tue Jul 09 2024 Neil Hanlon <nhanlon@ciq.com> - 3.7.17-8.3
 - rebuild for multilib
 
@@ -434,7 +439,7 @@ rm -rf $RPM_BUILD_ROOT
 - add lemon subpackage
 
 * Thu Dec  4 2008 Matthias Clasen <mclasen@redhat.com> - 3.6.6.2-3
-- Rebuild for pkg-config provides 
+- Rebuild for pkg-config provides
 
 * Tue Dec 02 2008 Panu Matilainen <pmatilai@redhat.com> - 3.6.6.2-2
 - require tcl(abi) in sqlite-tcl subpackage (#474034)
@@ -496,7 +501,7 @@ rm -rf $RPM_BUILD_ROOT
 - Update to 3.4.0
 
 * Fri Jun 01 2007 Paul Nasrat <pnasrat@redhat.com> - 3.3.17-2
-- Enable load 
+- Enable load
 - Build fts1 and fts2
 - Don't sync on dirs (#237427)
 
@@ -541,7 +546,7 @@ rm -rf $RPM_BUILD_ROOT
 - rebuilt
 
 * Tue Oct  4 2005 Jeremy Katz <katzj@redhat.com> - 3.2.7-2
-- no more static file or libtool archive (#169874) 
+- no more static file or libtool archive (#169874)
 
 * Wed Sep 28 2005 Florian La Roche <laroche@redhat.com>
 - Upgrade to 3.2.7 release.
