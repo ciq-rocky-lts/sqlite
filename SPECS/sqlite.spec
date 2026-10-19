@@ -10,7 +10,7 @@
 Summary: Library that implements an embeddable SQL database engine
 Name: sqlite
 Version: %{rpmver}
-Release: 8%{?dist}.5
+Release: 8.1%{?dist}.5
 License: Public Domain
 Group: Applications/Databases
 URL: http://www.sqlite.org/
@@ -45,6 +45,8 @@ Patch12: CVE-2019-5827.patch
 Patch13: CVE-2020-35527.patch
 
 Patch100: CVE-2025-6965.patch
+# CVE-2020-35525 — upstream backport
+Patch101: sqlite-3.7.17-CVE-2020-35525.patch
 
 BuildRequires: ncurses-devel readline-devel glibc-devel
 BuildRequires: autoconf
@@ -128,6 +130,7 @@ This package contains the tcl modules for %{name}.
 %patch12 -p1
 %patch13 -p1
 %patch100 -p1
+%patch101 -p1 -b .CVE-2020-35525
 
 # Remove cgi-script erroneously included in sqlite-doc-3070500
 rm -f %{name}-doc-%{realver}/search
@@ -218,6 +221,9 @@ rm -rf $RPM_BUILD_ROOT
 %endif
 
 %changelog
+* Wed Sep 02 2026 Jason Rodriguez <jrodriguez@ciq.com> - 3.7.17-8.1.5
+- Fix CVE-2020-35525
+
 * Mon Nov 24 2025 Trinity Quirk <tquirk@ciq.com> - 3.7.17-8.5
 - Fix CVE-2025-6965
 
